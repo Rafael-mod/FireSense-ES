@@ -40,3 +40,25 @@ def criar_mapa_focos_por_ano(df, ano):
     nome_arquivo = f"outputs/mapa_focos_{ano}.html"
     mapa.save(nome_arquivo)
     print(f"✅ Mapa salvo como {nome_arquivo}")
+
+
+
+    #gráfico ideia do professor
+
+def grafico_linhas_cachoeiro(df):
+    # Filtra apenas os dados de Cachoeiro de Itapemirim
+    df_cachoeiro = df[df['municipio'].str.lower() == 'cachoeiro de itapemirim']
+
+    # Agrupa por ano e soma os focos
+    dados_anuais = df_cachoeiro.groupby('ano')['qtd_focos'].sum().reset_index()
+
+    # Gera o gráfico de linha
+    plt.figure(figsize=(10, 5))
+    plt.plot(dados_anuais['ano'], dados_anuais['qtd_focos'], marker='o', linestyle='-', color='firebrick')
+    plt.title('📈 Focos de Incêndio em Cachoeiro de Itapemirim (2020–2024)')
+    plt.xlabel('Ano')
+    plt.ylabel('Quantidade de Focos')
+    plt.grid(True)
+    plt.xticks(dados_anuais['ano'])  # Garante que só os anos da base apareçam
+    plt.tight_layout()
+    plt.show()
